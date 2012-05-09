@@ -31,8 +31,8 @@
 		usort($tasks, "cmp_task");
 	}
 	
-	function display_as_table($tasks){
-		echo table_header();
+	function display_as_table($tasks, $title){
+		echo table_header($title);
 		
 		//Output all tasks
 		foreach($tasks as $task){
@@ -45,8 +45,8 @@
 		echo table_footer();
 	}
 	
-	function table_header(){
-		return "<h1>My tasks</h1>". 
+	function table_header($title){
+		return "<h1>" . $title . "</h1>". 
 			"<table>
 				<tr>
 					<td><strong>Project</strong></td>
