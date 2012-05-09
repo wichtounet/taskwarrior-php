@@ -7,8 +7,10 @@
 	</tr>
 
 <?php
+	include "config.php";
+
 	//Open the pending tasks
-	$file_handle = fopen("../taskwarrior/pending.data", "r");
+	$file_handle = fopen($PENDING_DATA_PATH, "r");
 	
 	//Output all lines
 	while (!feof($file_handle)) {
