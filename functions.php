@@ -22,16 +22,15 @@
 		return $tasks;
 	}
 	
-	function sort_tasks($tasks){
-		function cmp_task($a, $b)
-		{
+	function sort_tasks(&$tasks){
+		function cmp_task($a, $b){
 			return strcmp($a->project, $b->project);
 		}
-
+		
 		usort($tasks, "cmp_task");
 	}
 	
-	function display_as_table($tasks, $title){
+	function display_as_table(&$tasks, $title){
 		echo table_header($title);
 		
 		//Output all tasks
