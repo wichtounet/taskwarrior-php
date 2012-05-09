@@ -29,6 +29,13 @@
 	//Close the file
 	fclose($file_handle);
 	
+	function cmp_task($a, $b)
+	{
+		return strcmp($a->project, $b->project);
+	}
+
+	usort($tasks, "cmp_task");
+	
 	//Output all tasks
 	foreach($tasks as $task){
 		echo "<tr>";
