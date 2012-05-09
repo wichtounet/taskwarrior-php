@@ -8,26 +8,36 @@
 
 <?php
 	include "config.php";
+	include "Task.php";
 
 	//Open the pending tasks
 	$file_handle = fopen($PENDING_DATA_PATH, "r");
 	
-	//Output all lines
+	//Parse all lines
 	while (!feof($file_handle)) {
-		echo "<tr>";
-
 		$line = fgets($file_handle);
 		$part = substr($line, 1, -2);
 		$parts = explode("\"", $part);
 
-		echo "<td>" . $parts[5] . "</td>";
-		echo "<td>" . $parts[1] . "</td>";
-
-		echo "</tr>";
+		$task = new Task();
+		$task->project = $parts[5];
+		$task->description = $parts[1];
+		
+		$tasks[] = $task;
 	}
 	
 	//Close the file
 	fclose($file_handle);
+	
+	//Output all tasks
+	foreach($tasks as $task){
+		echo "<tr>";
+		
+		echo "<td>" . $task->project . "</td>";
+		echo "<td>" . $task->description . "</td>";
+
+		echo "</tr>";
+	}
 ?>
 
 </table>
