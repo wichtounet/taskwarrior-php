@@ -1,5 +1,5 @@
 <?php
-	function parse_tasks($file){
+	function parse_tasks($file, $type){
 		//Open the pending tasks
 		$file_handle = fopen($file, "r");
 		
@@ -10,8 +10,18 @@
 			$parts = explode("\"", $part);
 
 			$task = new Task();
-			$task->project = $parts[5];
-			$task->description = $parts[1];
+
+            //For pending.data
+            if($type == 0){
+                $task->project = $parts[5];
+                $task->description = $parts[1];
+            }
+
+            //For completed.data
+            if($type == 1){
+                $task->project = $parts[7];
+                $task->description = $parts[1];
+            }
 			
 			$tasks[] = $task;
 		}
@@ -45,13 +55,13 @@
 		table_footer();
 	}
 
-    function display_by_projects(&$tasks, $title){
+    function display_by_projects(&$pending, &$completed, $title){
         page_header($title);
 
 		$project = "";
         $first = 0;
         
-        foreach($tasks as $task){
+        foreach($pending as $task){
             if($task->project == ""){
                 $no_project[] = $task;
 
@@ -67,7 +77,7 @@
                     $first = 1;
                 }
 
-                echo "<h2>" . $task->project . "</h2>";
+                echo "<h2>" . $task->project . " (Completed: " . project_completion($task->project, $pending, $completed)  . "%)</h2>";
                 echo "<ul>";
 
                 $project = $task->project;
@@ -104,4 +114,23 @@
 	function table_footer(){
 		echo "</table>";
 	}
+
+    function project_completion($project, &$pending, &$completed){
+        $pending_cnt = 0.0;
+        $completed_cnt = 0.0;
+
+        foreach($pending as $task){
+            if($task->project == $project){
+                $pending_cnt += 1;
+            }
+        }
+
+        foreach($completed as $task){
+            if($task->project == $project){
+                $completed_cnt += 1;
+            }
+        }
+
+        return $completed_cnt / ($pending_cnt + $completed_cnt);
+    }
 ?>
