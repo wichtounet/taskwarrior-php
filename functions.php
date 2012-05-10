@@ -21,12 +21,12 @@
 		
 		return $tasks;
 	}
+		
+    function cmp_task($a, $b){
+        return strcmp($a->project, $b->project);
+    }
 	
 	function sort_tasks(&$tasks){
-		function cmp_task($a, $b){
-			return strcmp($a->project, $b->project);
-		}
-		
 		usort($tasks, "cmp_task");
 	}
 	
