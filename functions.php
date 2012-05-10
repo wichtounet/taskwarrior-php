@@ -131,6 +131,6 @@
             }
         }
 
-        return $completed_cnt / ($pending_cnt + $completed_cnt);
+        return round($completed_cnt / ($pending_cnt + $completed_cnt), 2);
     }
 ?>
