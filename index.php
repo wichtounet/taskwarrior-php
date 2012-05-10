@@ -7,5 +7,5 @@
 	
 	sort_tasks($tasks);
 	
-	display_as_table($tasks, $TITLE);
+	display_by_projects($tasks, $TITLE);
 ?>
