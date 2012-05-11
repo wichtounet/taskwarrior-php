@@ -168,8 +168,13 @@
 		
 		$date = new DateTime();
 		$entry = $date->format(DateTime::ISO8601);
-
-		$task = "[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $uuid . "\"]";
+		
+		$entry = str_replace("-", "", $entry);
+		$entry = str_replace(":", "", $entry);
+		$entry = substr($entry, 0, -4);
+		$entry = $entry . "Z";
+		
+		$task = "[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $id . "\"]";
 		
 		file_put_contents($file, $task, FILE_APPEND | LOCK_EX);
 	}
