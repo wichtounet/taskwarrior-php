@@ -11,16 +11,19 @@
 
 			$task = new Task();
 
+			
             //For pending.data
             if($type == 0){
                 $task->project = $parts[5];
                 $task->description = $parts[1];
+                $task->uuid = $parts[9];
             }
-
+			
             //For completed.data
             if($type == 1){
                 $task->project = $parts[7];
                 $task->description = $parts[1];
+                $task->uuid = $parts[11];
             }
 			
 			$tasks[] = $task;
@@ -144,5 +147,30 @@
 	
 	function uuid(){
 		return strtolower(GUID());
+	}
+	
+	function uuid_exists($uuid, &$pending){
+		foreach($pending as $task){
+            if($task->uuid == $uuid){
+                return true;
+            }
+        }
+		
+		return false;
+	}
+	
+	function create_task($description, $project, &$tasks, $file){
+		$id = uuid();
+		
+		while(uuid_exists($id, $tasks)){
+			$id = uuid();
+		}
+		
+		$date = new DateTime();
+		$entry = $date->format(DateTime::ISO8601);
+
+		$task = "[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $uuid . "\"]";
+		
+		file_put_contents($file, $task, FILE_APPEND | LOCK_EX);
 	}
 ?>
