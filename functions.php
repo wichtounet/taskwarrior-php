@@ -174,7 +174,7 @@
 		$entry = substr($entry, 0, -4);
 		$entry = $entry . "Z";
 		
-		$task = "[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $id . "\"]";
+		$task = "\n[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $id . "\"]";
 		
 		file_put_contents($file, $task, FILE_APPEND | LOCK_EX);
 	}
