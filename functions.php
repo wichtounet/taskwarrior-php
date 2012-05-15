@@ -88,7 +88,7 @@
                 $project = $task->project;
             }
 
-			echo "<li>" . $task->description . "</li>";
+			echo "<li>" . $task->description . ", age = " . task_age($task)  . " </li>";
 		}
 
         if(count($no_projects) > 0){
@@ -120,6 +120,32 @@
 	function table_footer(){
 		echo "</table>";
 	}
+
+    function task_age($task){
+        $current = time();
+        $entry = intval($task->entry);
+        $diff = $current - $entry;
+
+        if($diff < 60){
+            return $diff . " seconds";
+        }
+
+        $diff = floor($diff / 60);
+
+        if($diff < 60){
+            return $diff . " minutes";
+        }
+        
+        $diff = floor($diff / 60);
+
+        if($diff < 24){
+            return $diff . " hours";
+        }
+        
+        $diff = floor($diff / 24);
+        
+        return $diff . " days";
+    }
 
     function project_completion($project, &$pending, &$completed){
         $pending_cnt = 0.0;
