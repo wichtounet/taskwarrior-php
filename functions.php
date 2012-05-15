@@ -75,12 +75,31 @@
         echo "<div id=\"accordion\">";
     }
 
+    function accordion_footer(){
+        echo "</div>";
+    }
+
     function display_task($task){
         echo 
             "<li>" . $task->description . ", age = " . task_age($task) . 
                 "&nbsp;<a class=\"button\" href=\"?action=done&uuid=" . $task->uuid . "\">Done</a>" . 
                 "&nbsp;<a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">Delete</a>" . 
             "</li>";
+    }
+
+    function section_header($title, $completion = -1){
+        echo "<h3><a href='#'>" . $title;
+        if($completion > -1){
+            echo " (Completed: " . $completion  . "%)";
+        }
+        echo "</a></h3>";
+        echo "<div>";
+        echo "<ul>";
+    }
+
+    function section_footer(){
+        echo "</ul>";
+        echo "</div>";
     }
 
     function display_by_projects(&$pending, &$completed, $title){
@@ -99,17 +118,14 @@
 
             if($task->project != $project){
                 if($first == 1){
-                    echo "</ul>";
-                    echo "</div>";
+                    section_footer();
                 }
 
                 if($first == 0){
                     $first = 1;
                 }
 
-                echo "<h3><a href='#'>" . $task->project . " (Completed: " . project_completion($task->project, $pending, $completed)  . "%)</a></h3>";
-                echo "<div>";
-                echo "<ul>";
+                section_header($task->project, project_completion($task->project, $pending, $completed));
 
                 $project = $task->project;
             }
@@ -118,20 +134,16 @@
 		}
 
         if(count($no_projects) > 0){
-            echo "<h3><a href='#'>" . $task->project . "</a></h3>";
-           
-            echo "<div>";
-            echo "<ul>";
+            section_header("No projects");
 
             foreach($no_project as $task){
                 display_task($task);
             }
 
-            echo "</ul>";
-            echo "</div>";
+            section_footer();
         }
 
-        echo "</div>";
+        accordion_footer();
     }
 
     function page_header($title){
