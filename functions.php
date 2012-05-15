@@ -124,9 +124,14 @@
     }
 
     function page_header($title){
-		echo "<h1>" . $title . "</h1>";
-        echo "<a href=\"insert.php\">New task</a>";
-    }
+        echo "<div>";
+            echo "<h1 style=\"text-align:left;float:left;\">" . $title . "</h1>";
+            echo "<div style=\"padding-top:35px\">";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"insert.php\">New task</a>";
+            echo "</div>";
+        echo "</div>";
+        echo "<hr style=\"clear:both;\"/>";
+   }
 	
 	function table_header(){
 		echo "<table>
