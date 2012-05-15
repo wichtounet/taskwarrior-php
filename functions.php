@@ -16,7 +16,7 @@
             if($type == 0){
                 $task->project = $parts[5];
                 $task->description = $parts[1];
-                $task->uuid = $parts[9];
+                $task->uuid = $parts[11];
                 $task->entry = $parts[3];
             }
 			
