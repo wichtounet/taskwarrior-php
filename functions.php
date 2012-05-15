@@ -88,7 +88,7 @@
                 $project = $task->project;
             }
 
-			echo "<li>" . $task->description . ", age = " . task_age($task)  . " </li>";
+			echo "<li>" . $task->description . ", age = " . task_age($task)  . "&nbsp;<a href=\"?action=delete&uuid=" . $task->uuid . "\">done</a>&nbsp;</li>";
 		}
 
         if(count($no_projects) > 0){
