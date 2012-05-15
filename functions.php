@@ -104,6 +104,7 @@
 
     function page_header($title){
 		echo "<h1>" . $title . "</h1>";
+        echo "<a href=\"insert.php\">New task</a>";
     }
 	
 	function table_header(){
