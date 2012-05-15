@@ -134,7 +134,7 @@
             }
         }
 
-        return round($completed_cnt / ($pending_cnt + $completed_cnt), 2);
+        return 100 * round($completed_cnt / ($pending_cnt + $completed_cnt), 2);
     }
 	
 	function GUID(){
