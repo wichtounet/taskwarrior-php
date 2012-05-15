@@ -10,7 +10,6 @@
 			$parts = explode("\"", $part);
 
 			$task = new Task();
-
 			
             //For pending.data
             if($type == 0){
@@ -60,8 +59,21 @@
 		table_footer();
 	}
 
+    function accordion_header(){
+        echo "<script>
+            $(function() {
+                $( \"#accordion\" ).accordion({
+                    collapsible: true
+                });
+            });
+            </script>";
+    }
+
     function display_by_projects(&$pending, &$completed, $title){
         page_header($title);
+        accordion_header();
+
+        echo "<div id=\"accordion\">";
 
 		$project = "";
         $first = 0;
@@ -76,13 +88,15 @@
             if($task->project != $project){
                 if($first == 1){
                     echo "</ul>";
+                    echo "</div>";
                 }
 
                 if($first == 0){
                     $first = 1;
                 }
 
-                echo "<h2>" . $task->project . " (Completed: " . project_completion($task->project, $pending, $completed)  . "%)</h2>";
+                echo "<h3><a href='#'>" . $task->project . " (Completed: " . project_completion($task->project, $pending, $completed)  . "%)</a></h3>";
+                echo "<div>";
                 echo "<ul>";
 
                 $project = $task->project;
@@ -92,8 +106,9 @@
 		}
 
         if(count($no_projects) > 0){
-            echo "<h2>" . $task->project . "</h2>";
+            echo "<h3><a href='#'>" . $task->project . "</a></h3>";
            
+            echo "<div>";
             echo "<ul>";
 
             foreach($no_project as $task){
@@ -101,7 +116,10 @@
             }
 
             echo "</ul>";
+            echo "</div>";
         }
+
+        echo "</div>";
     }
 
     function page_header($title){
