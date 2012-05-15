@@ -159,14 +159,8 @@
 		
 		return false;
 	}
-	
-	function create_task($description, $project, &$tasks, $file){
-		$id = uuid();
-		
-		while(uuid_exists($id, $tasks)){
-			$id = uuid();
-		}
-		
+
+    function iso8601_date(){
 		$date = new DateTime();
 		$entry = $date->format(DateTime::ISO8601);
 		
@@ -174,6 +168,18 @@
 		$entry = str_replace(":", "", $entry);
 		$entry = substr($entry, 0, -4);
 		$entry = $entry . "Z";
+
+        return $entry;
+    }
+	
+	function create_task($description, $project, &$tasks, $file){
+		$id = uuid();
+		
+		while(uuid_exists($id, $tasks)){
+			$id = uuid();
+		}
+	
+        $entry = time();
 		
 		$task = "\n[description:\"" . $description . "\" entry:\"" . $entry . "\" project:\"" . $project . "\" status:\"pending\" uuid:\"" . $id . "\"]";
 		
