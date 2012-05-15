@@ -71,13 +71,21 @@
                 $( \".button\", \".body\" ).button();
             });
             </script>";
+        
+        echo "<div id=\"accordion\">";
+    }
+
+    function display_task($task){
+        echo 
+            "<li>" . $task->description . ", age = " . task_age($task) . 
+                "&nbsp;<a class=\"button\" href=\"?action=done&uuid=" . $task->uuid . "\">Done</a>" . 
+                "&nbsp;<a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">Delete</a>" . 
+            "</li>";
     }
 
     function display_by_projects(&$pending, &$completed, $title){
         page_header($title);
         accordion_header();
-
-        echo "<div id=\"accordion\">";
 
 		$project = "";
         $first = 0;
@@ -106,7 +114,7 @@
                 $project = $task->project;
             }
 
-			echo "<li>" . $task->description . ", age = " . task_age($task)  . "&nbsp;<a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">done</a>&nbsp;</li>";
+            display_task($task);
 		}
 
         if(count($no_projects) > 0){
@@ -116,7 +124,7 @@
             echo "<ul>";
 
             foreach($no_project as $task){
-                echo "<li>" . $task->description . "</li>";
+                display_task($task);
             }
 
             echo "</ul>";
