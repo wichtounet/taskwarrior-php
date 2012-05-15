@@ -67,6 +67,9 @@
                     autoHeight: false
                 });
             });
+            $(function() {
+                $( \".button\", \".body\" ).button();
+            });
             </script>";
     }
 
@@ -103,7 +106,7 @@
                 $project = $task->project;
             }
 
-			echo "<li>" . $task->description . ", age = " . task_age($task)  . "&nbsp;<a href=\"?action=delete&uuid=" . $task->uuid . "\">done</a>&nbsp;</li>";
+			echo "<li>" . $task->description . ", age = " . task_age($task)  . "&nbsp;<a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">done</a>&nbsp;</li>";
 		}
 
         if(count($no_projects) > 0){
@@ -126,8 +129,8 @@
     function page_header($title){
         echo "<div>";
             echo "<h1 style=\"text-align:left;float:left;\">" . $title . "</h1>";
-            echo "<div style=\"padding-top:35px\">";
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"insert.php\">New task</a>";
+            echo "<div style=\"padding-top:20px;\">";
+            echo "&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"button\" href=\"insert.php\">New task</a>";
             echo "</div>";
         echo "</div>";
         echo "<hr style=\"clear:both;\"/>";
