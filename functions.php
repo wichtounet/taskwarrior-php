@@ -17,6 +17,7 @@
                 $task->project = $parts[5];
                 $task->description = $parts[1];
                 $task->uuid = $parts[9];
+                $task->entry = $parts[3];
             }
 			
             //For completed.data
@@ -24,6 +25,7 @@
                 $task->project = $parts[7];
                 $task->description = $parts[1];
                 $task->uuid = $parts[11];
+                $task->entry = $parts[5];
             }
 			
 			$tasks[] = $task;
