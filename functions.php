@@ -3,32 +3,39 @@
 		//Open the pending tasks
 		$file_handle = fopen($file, "r");
 		
-		//Parse all lines
-		while (!feof($file_handle)) {
-			$line = fgets($file_handle);
-			$part = substr($line, 1, -2);
-			$parts = explode("\"", $part);
+        //Parse all lines
+        while (!feof($file_handle)) {
+            $line = fgets($file_handle);
+            $part = substr($line, 1, -2);
+            $parts = explode("\"", $part);
 
-			$task = new Task();
-			
-            //For pending.data
-            if($type == 0){
-                $task->project = $parts[5];
-                $task->description = $parts[1];
-                $task->uuid = $parts[11];
-                $task->entry = $parts[3];
+            $task = new Task();
+
+            for($i = 0; $i < sizeof($parts); $i += 2){
+                $key = $parts[$i];
+                $value = $parts[$i+1];
+
+                $key = trim($key);
+                $value = trim($value);
+
+                switch($key){
+                    case "description:":
+                        $task->description = $value;
+                        break;
+                    case "project:":
+                        $task->project = $value;
+                        break;
+                    case "entry:":
+                        $task->entry = $value;
+                        break;
+                    case "uuid:":
+                        $task->uuid = $value;
+                        break;
+                }
             }
-			
-            //For completed.data
-            if($type == 1){
-                $task->project = $parts[7];
-                $task->description = $parts[1];
-                $task->uuid = $parts[11];
-                $task->entry = $parts[5];
-            }
-			
-			$tasks[] = $task;
-		}
+
+            $tasks[] = $task;
+        }
 		
 		//Close the file
 		fclose($file_handle);
