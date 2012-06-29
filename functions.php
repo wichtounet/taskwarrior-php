@@ -205,7 +205,13 @@ function task_age($task){
 
     $diff = floor($diff / 24);
 
-    return $diff . " days";
+    if($diff < 30){
+        return $diff . " days";
+    }
+
+    $diff = round($diff / 30);
+
+    return $diff . " months";
 }
 
 function project_completion($project, &$pending, &$completed){
