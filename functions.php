@@ -45,7 +45,13 @@ function parse_tasks($file){
 }
 
 function cmp_task($a, $b){
-    return strcasecmp($a->project, $b->project);
+    $cmp = strcasecmp($a->project, $b->project);
+
+    if($cmp == 0){
+        return strcasecmp($a->description, $b->description); 
+    } else {
+        return $cmp;
+    }
 }
 
 function sort_tasks(&$tasks){
