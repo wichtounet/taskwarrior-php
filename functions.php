@@ -1,6 +1,6 @@
 <?php
 
-function parse_tasks($file, $type){
+function parse_tasks($file){
     //Open the pending tasks
     $file_handle = fopen($file, "r");
 
@@ -21,17 +21,17 @@ function parse_tasks($file, $type){
 
             switch($key){
                 case "description:":
-                                  $task->description = $value;
-                                  break;
+                  $task->description = $value;
+                  break;
                 case "project:":
-                              $task->project = $value;
-                              break;
+                  $task->project = $value;
+                  break;
                 case "entry:":
-                            $task->entry = $value;
-                            break;
+                  $task->entry = $value;
+                  break;
                 case "uuid:":
-                           $task->uuid = $value;
-                           break;
+                   $task->uuid = $value;
+                   break;
             }
         }
 
@@ -273,11 +273,11 @@ function create_task($description, $project, &$tasks, $file){
 function delete_task($uuid){
     global $PENDING_DATA_PATH;
 
-    $pending = parse_tasks($PENDING_DATA_PATH, 0);
+    $pending = parse_tasks($PENDING_DATA_PATH);
     
     $fd = fopen($PENDING_DATA_PATH, 'w') or die("Can't open file");
    
-    for($i =0; $i < sizeof($pending); $i++){
+    for($i = 0; $i < sizeof($pending); $i++){
         $task = $pending[$i];
 
         if($task->uuid != $uuid){
@@ -287,6 +287,33 @@ function delete_task($uuid){
     }
 
     fclose($fd);
+}
+
+function done_task($uuid){
+    global $PENDING_DATA_PATH;
+    global $COMPLETED_DATA_PATH;
+    
+    $pending = parse_tasks($PENDING_DATA_PATH);
+    $completed = parse_tasks($COMPLETED_DATA_PATH);
+    
+    $fd = fopen($PENDING_DATA_PATH, 'w') or die("Can't open file");
+   
+    for($i = 0; $i < sizeof($pending); $i++){
+        $task = $pending[$i];
+
+        if($task->uuid != $uuid){
+            $content = "\n[description:\"" . $task->description . "\" entry:\"" . $task->entry . "\" project:\"" . $task->project . "\" status:\"pending\" uuid:\"" . $task->uuid . "\"]";
+            fwrite($fd, $content);
+        } else {
+            $removed_task = $task;
+        }
+    }
+
+    fclose($fd);
+
+    $content = "\n[description:\"" . $removed_task->description . "\" entry:\"" . $removed_task->entry . "\" end:\"" . time() . "\" project:\"" . $removed_task->project . "\" status:\"completed\" uuid:\"" . $uuid . "\"]";
+
+    file_put_contents($COMPLETED_DATA_PATH, $content, FILE_APPEND | LOCK_EX);
 }
 
 ?>

@@ -8,12 +8,16 @@
 			$description = $_GET["description"];
 			$project = $_GET["project"];
 			
-			$pending = parse_tasks($PENDING_DATA_PATH, 0);
+			$pending = parse_tasks($PENDING_DATA_PATH);
 			create_task($description, $project, $pending, $PENDING_DATA_PATH);
 		} else if($_GET["action"] == "delete"){
             $uuid = $_GET["uuid"];
 
             delete_task($uuid);
+		} else if($_GET["action"] == "done"){
+            $uuid = $_GET["uuid"];
+
+            done_task($uuid);
         }
 	}
 ?>
@@ -27,8 +31,8 @@
     <body>
         <div class="body">
             <?php
-                $pending = parse_tasks($PENDING_DATA_PATH, 0);
-                $completed = parse_tasks($COMPLETED_DATA_PATH, 1);
+                $pending = parse_tasks($PENDING_DATA_PATH);
+                $completed = parse_tasks($COMPLETED_DATA_PATH);
                 
                 sort_tasks($pending);
                 sort_tasks($completed);
