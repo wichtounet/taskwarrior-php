@@ -1,7 +1,7 @@
 <?php
-	require_once("config.php");
-	require_once("Task.php");
-	require_once("functions.php");
+	include("config.php");
+	include("Task.php");
+	include("functions.php");
 
 	if(isset($_GET["action"])){
 		if($_GET["action"] == "insert"){
@@ -10,7 +10,11 @@
 			
 			$pending = parse_tasks($PENDING_DATA_PATH, 0);
 			create_task($description, $project, $pending, $PENDING_DATA_PATH);
-		}
+		} else if($_GET["action"] == "delete"){
+            $uuid = $_GET["uuid"];
+
+            delete_task($uuid);
+        }
 	}
 ?>
 
