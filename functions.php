@@ -90,8 +90,8 @@ function accordion_footer(){
 function display_task($task){
     echo 
         "<li>" . $task->description . ", age = " . task_age($task) . 
-        "&nbsp;<a class=\"button\" href=\"?action=done&uuid=" . $task->uuid . "\">Done</a>" . 
-        "&nbsp;<a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">Delete</a>" . 
+        "&nbsp;<small><a class=\"button\" href=\"?action=done&uuid=" . $task->uuid . "\">Done</a></small>" . 
+        "&nbsp;<small><a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">Delete</a></small>" . 
         "</li>";
 }
 
@@ -158,7 +158,7 @@ function page_header($title){
     echo "<div>";
     echo "<h1 style=\"text-align:left;float:left;\">" . $title . "</h1>";
     echo "<div style=\"padding-top:20px;\">";
-    echo "&nbsp;&nbsp;&nbsp;&nbsp;<a class=\"button\" href=\"insert.php\">New task</a>";
+    echo "&nbsp;&nbsp;&nbsp;&nbsp;<small><a class=\"button\" href=\"insert.php\">New task</a></small>";
     echo "</div>";
     echo "</div>";
     echo "<hr style=\"clear:both;\"/>";
@@ -268,6 +268,7 @@ function create_task($description, $project, &$tasks, $file){
 
     file_put_contents($file, $task, FILE_APPEND | LOCK_EX);
 }
+
 
 function delete_task($uuid){
     global $PENDING_DATA_PATH;
