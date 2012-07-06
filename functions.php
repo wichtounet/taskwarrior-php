@@ -32,6 +32,9 @@ function parse_tasks($file){
                 case "uuid:":
                    $task->uuid = $value;
                    break;
+                case "tags:":
+                   $task->tags = $value;
+                   break;
             }
         }
 
@@ -94,8 +97,13 @@ function accordion_footer(){
 }
 
 function display_task($task){
+    $tags = "";
+    if(strlen($task->tags) > 0){
+        $tags = ", tags = {" . $task->tags . "}";
+    }
+
     echo 
-        "<li>" . $task->description . ", age = " . task_age($task) . 
+        "<li>" . $task->description . ", age = " . task_age($task) . $tags . 
         "&nbsp;<small><a class=\"button\" href=\"?action=done&uuid=" . $task->uuid . "\">Done</a></small>" . 
         "&nbsp;<small><a class=\"button\" href=\"?action=delete&uuid=" . $task->uuid . "\">Delete</a></small>" . 
         "</li>";

@@ -4,5 +4,6 @@
 		public $project = "";
 		public $uuid = "";
         public $entry = "";
+        public $tags = "";
 	}
 ?>
